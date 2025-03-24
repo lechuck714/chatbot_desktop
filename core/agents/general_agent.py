@@ -1,5 +1,5 @@
 # agents/general_agent.py
-from chatbot import ask_chatgpt
+from services.ai_service import ask_chatgpt
 
 class GeneralAgent:
     def __init__(self, blackboard):

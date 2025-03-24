@@ -1,7 +1,7 @@
 # agents/web_agent.py
 
 import requests
-from chatbot import ask_chatgpt
+from services.ai_service import ask_chatgpt
 
 class WebAgent:
     def __init__(self, blackboard):

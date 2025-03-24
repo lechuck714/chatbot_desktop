@@ -1,10 +1,9 @@
 # agents/data_agent.py
 
-import pandas as pd
 import matplotlib.pyplot as plt
 import os
 import re
-from chatbot import ask_chatgpt
+from services.ai_service import ask_chatgpt
 
 class DataAgent:
     def __init__(self, blackboard):

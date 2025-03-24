@@ -1,5 +1,5 @@
 # agents/doc_agent.py
-from chatbot import ask_chatgpt
+from services.ai_service import ask_chatgpt
 
 class DocAgent:
     def __init__(self, blackboard):

@@ -1,6 +1,6 @@
 # agent_manager.py
 
-from agents.blackboard import Blackboard
+from storage.blackboard import Blackboard
 from agents.doc_agent import DocAgent
 from agents.data_agent import DataAgent
 from agents.general_agent import GeneralAgent
