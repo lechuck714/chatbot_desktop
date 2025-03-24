@@ -1,10 +1,11 @@
-# agent_manager.py
+# chatbot_desktop/core/agent_manager.py
 
 from storage.blackboard import Blackboard
-from agents.doc_agent import DocAgent
-from agents.data_agent import DataAgent
-from agents.general_agent import GeneralAgent
-from agents.web_agent import WebAgent
+from core.agents.doc_agent import DocAgent
+from core.agents.data_agent import DataAgent
+from core.agents.general_agent import GeneralAgent
+from core.agents.web_agent import WebAgent
+
 
 class AgentManager:
     def __init__(self):
@@ -27,13 +28,7 @@ class AgentManager:
         self.active_agent = self.data_agent
 
     def route_query(self, user_msg):
-        """
-        1) Save user_msg
-        2) Decide if we see 'fetch http' or 'scrape' => webAgent
-        3) Otherwise if we have active agent => doc or data
-        4) Else fallback => general
-        """
-        self.blackboard.conversation_history.append({"role":"user","content": user_msg})
+        self.blackboard.conversation_history.append({"role": "user", "content": user_msg})
 
         lower_msg = user_msg.lower()
         if "fetch http" in lower_msg or "scrape http" in lower_msg:
@@ -43,7 +38,7 @@ class AgentManager:
         else:
             response = self.general_agent.handle_query(user_msg)
 
-        self.blackboard.conversation_history.append({"role":"assistant","content": response})
+        self.blackboard.conversation_history.append({"role": "assistant", "content": response})
         return response
 
     def reset_all(self):

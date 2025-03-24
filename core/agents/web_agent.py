@@ -1,19 +1,19 @@
-# agents/web_agent.py
+# chatbot_desktop/core/agents/web_agent.py
 
 import requests
+from .base_agent import BaseAgent
 from services.ai_service import ask_chatgpt
 
-class WebAgent:
-    def __init__(self, blackboard):
-        self.blackboard = blackboard
 
+class WebAgent(BaseAgent):
     def handle_query(self, user_msg):
-        print("DEBUG: WebAgent handling query!")
+        self.logger.debug("WebAgent handling query!")
+
         self.blackboard.conversation_history.append(
-            {"role":"system","content":"(WebAgent fetching a URL...)"}
+            {"role": "system", "content": "(WebAgent fetching a URL...)"}
         )
 
-        # naive parse for 'http' or 'https'
+        # Naive parse for 'http/https' in user_msg
         words = user_msg.split()
         url = None
         for w in words:
@@ -30,7 +30,6 @@ class WebAgent:
                 page_text = resp.text
                 truncated = page_text[:3000]
 
-                # flatten conversation so far
                 conv_text = ""
                 for c in self.blackboard.conversation_history:
                     role = c["role"]
@@ -47,4 +46,4 @@ class WebAgent:
             else:
                 return f"Failed to fetch {url}. HTTP status {resp.status_code}"
         except Exception as e:
-            return f"Error fetching {url}: {e}"
+            return f"Error fetching {url}: {str(e)}"

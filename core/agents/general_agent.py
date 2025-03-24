@@ -1,12 +1,13 @@
-# agents/general_agent.py
+# chatbot_desktop/core/agents/general_agent.py
+
+from .base_agent import BaseAgent
 from services.ai_service import ask_chatgpt
 
-class GeneralAgent:
-    def __init__(self, blackboard):
-        self.blackboard = blackboard
 
+class GeneralAgent(BaseAgent):
     def handle_query(self, user_msg):
-        print("DEBUG: GeneralAgent fallback.")
+        self.logger.debug("GeneralAgent fallback.")
+
         conv_text = ""
         for msg in self.blackboard.conversation_history:
             role = msg["role"]

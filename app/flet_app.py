@@ -5,14 +5,12 @@ import datetime
 import os
 import sys
 import subprocess
-import textwrap  # for word wrapping
 
-import pandas as pd
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import LETTER
 
-from file_handler import read_file
-from chatbot import ask_chatgpt  # We assume you have a single ask_chatgpt(msg) approach
+from storage.file_handler import read_file
+from services.ai_service import ask_chatgpt  # We assume you have a single ask_chatgpt(msg) approach
 
 # GLOBALS to store doc content + conversation
 conversation_history = []  # list of dicts: {"role": "user"|"assistant"|"system", "content": "..."}

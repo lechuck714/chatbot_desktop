@@ -1,26 +1,27 @@
-# ai_service.py
-from openai import OpenAI
-from config import OPENAI_API_KEY
+# chatbot_desktop/services/ai_service.py
 
-client = OpenAI(api_key=OPENAI_API_KEY)
+import openai
+from config.config import OPENAI_API_KEY
+
+# Initialize the OpenAI client
+openai.api_key = OPENAI_API_KEY
+
 
 def ask_chatgpt(message, system_prompt=None):
     """
-    Using the new openai Python v1.x approach with your gpt-4o (or whichever) model.
+    Using the python openai library to call chat completions.
     """
     messages = []
-
     if system_prompt:
         messages.append({"role": "system", "content": system_prompt})
-
     messages.append({"role": "user", "content": message})
 
     try:
-        response = client.chat.completions.create(
-            model="gpt-4o",  # or your actual model name
+        response = openai.ChatCompletion.create(
+            model="gpt-4",  # or "gpt-3.5-turbo", "gpt-4.5" etc.
             messages=messages,
             temperature=0.8
         )
-        return response.choices[0].message.content.strip()
+        return response.choices[0].message["content"].strip()
     except Exception as e:
         return f"[ERROR] {str(e)}"

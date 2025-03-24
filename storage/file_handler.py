@@ -1,9 +1,11 @@
-# file_handler.py
+# chatbot_desktop/storage/file_handler.py
+
 import os
 import csv
 import pandas as pd
 import pdfplumber
 from docx import Document
+
 
 def read_file(file_path):
     ext = os.path.splitext(file_path)[-1].lower()
@@ -16,10 +18,10 @@ def read_file(file_path):
     elif ext == '.docx':
         return read_docx(file_path)
     elif ext in ['.csv', '.xlsx']:
-        # returns a string preview, or you can do a second pass with pandas in the UI
         return read_spreadsheet_preview(file_path, ext)
     else:
         return "Unsupported file type."
+
 
 def read_pdf_plumber(file_path):
     text = []
@@ -29,10 +31,12 @@ def read_pdf_plumber(file_path):
             text.append(page_text)
     return "\n".join(text)
 
+
 def read_docx(file_path):
     doc = Document(file_path)
     paragraphs = [p.text for p in doc.paragraphs if p.text.strip()]
     return "\n".join(paragraphs)
+
 
 def read_spreadsheet_preview(file_path, ext):
     try:
