@@ -1,4 +1,6 @@
-from base_agent import BaseAgent
+# chatbot_desktop/core/agents/doc_agent.py
+
+from .base_agent import BaseAgent
 from services.vector_service import VectorService
 from utils.chunker import chunk_text
 
@@ -9,35 +11,31 @@ class DocAgent(BaseAgent):
         self.vector_service = VectorService()
 
     def ingest_document(self, document_id, text, metadata=None):
+        """
+        Chunks the doc text and stores it in Chroma
+        """
         chunks = chunk_text(text)
         self.vector_service.add_document(document_id, chunks, metadata)
 
     def query_document(self, query_text):
+        """
+        Queries Chroma for relevant context
+        """
         results = self.vector_service.search(query_text, top_k=3)
         context = "\n---\n".join(chunk for chunk, _ in results)
         return context
 
+    def handle_query(self, user_msg):
+        """
+        Called if doc_agent is active. Could do direct usage of `query_document`.
+        """
+        self.logger.debug("DocAgent handling query.")
 
-if __name__ == "__main__":
-    from storage.blackboard import Blackboard
+        # Example usage: "search: how does AI work?"
+        if user_msg.lower().startswith("search:"):
+            query_text = user_msg.split("search:")[-1]
+            context = self.query_document(query_text)
+            return f"Here is the relevant context:\n{context}"
 
-    blackboard = Blackboard()
-
-    agent = DocAgent(blackboard=blackboard)  # Now matches the new constructor definition
-
-    # Ingest a sample document
-    document_id = "sample1"
-    document_text = (
-        "Artificial intelligence makes it possible for machines to learn from experience, "
-        "adjust to new inputs, and perform human-like tasks. "
-        "Most AI examples today rely heavily on deep learning and natural language processing."
-    )
-
-    agent.ingest_document(document_id, document_text)
-
-    # Perform a semantic search/query
-    query = "How do machines mimic human behavior?"
-    result_context = agent.query_document(query)
-
-    print("Retrieved context from ChromaDB:")
-    print(result_context)
+        # Otherwise, you might do some fallback logic ...
+        return "DocAgent: Try 'search: <your question>'."

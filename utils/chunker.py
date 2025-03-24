@@ -1,3 +1,5 @@
+# chatbot_desktop/utils/chunker.py
+
 import tiktoken
 
 

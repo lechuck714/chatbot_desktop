@@ -19,7 +19,7 @@ class DataAgent(BaseAgent):
     def handle_query(self, user_msg: str) -> str:
         self.logger.debug("DataAgent handling query.")
 
-        if not self.active_df_id or self.active_df_id not in self.blackboard.dataframes:
+        if (not self.active_df_id) or (self.active_df_id not in self.blackboard.dataframes):
             return "No dataframe is currently loaded."
 
         df = self.blackboard.dataframes[self.active_df_id]
@@ -33,14 +33,17 @@ class DataAgent(BaseAgent):
         elif "plot" in lower_msg:
             return self.make_plot(df)
         else:
-            return "DataAgent: I didn't understand your request. Try 'head', 'describe', or 'plot'."
+            return (
+                "DataAgent didn't understand your request. Try keywords like 'head', "
+                "'describe', or 'plot'."
+            )
 
     def make_plot(self, df: pd.DataFrame) -> str:
         numeric_cols = df.select_dtypes(include=["float", "int"]).columns
         if len(numeric_cols) < 1:
             return "No numeric columns to plot."
 
-        # For simplicity, plot the first numeric column as an example
+        # For simplicity, plot the first numeric column
         col = numeric_cols[0]
         plt.figure()
         df[col].plot(kind='hist', title=f"Histogram of {col}", bins=20)
@@ -51,5 +54,7 @@ class DataAgent(BaseAgent):
         buf.seek(0)
         img_base64 = base64.b64encode(buf.read()).decode('utf-8')
 
-        # Typically you'd return or display an HTML <img/> tag
-        return f"Here is a histogram of '{col}' as a base64 image:\n <img src='data:image/png;base64,{img_base64}'/>"
+        return (
+            f"Here is a histogram of '{col}' as a base64 image:\n"
+            f"<img src='data:image/png;base64,{img_base64}'/>"
+        )

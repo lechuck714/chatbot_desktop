@@ -18,6 +18,7 @@ def read_file(file_path):
     elif ext == '.docx':
         return read_docx(file_path)
     elif ext in ['.csv', '.xlsx']:
+        # We only return a short preview text here; the actual DataFrame is loaded in flet_app.py
         return read_spreadsheet_preview(file_path, ext)
     else:
         return "Unsupported file type."

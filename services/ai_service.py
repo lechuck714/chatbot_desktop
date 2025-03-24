@@ -1,9 +1,9 @@
-# services/ai_service.py (updated for openai>=1.0.0)
+# services/ai_service.py
 
 from openai import OpenAI
-from config.config import OPENAI_API_KEY
+from config.config import client
 
-client = OpenAI(api_key=OPENAI_API_KEY)
+client = client
 
 
 def ask_chatgpt(message, system_prompt=None):
@@ -14,7 +14,7 @@ def ask_chatgpt(message, system_prompt=None):
 
     try:
         response = client.chat.completions.create(
-            model="gpt-4-turbo",  # gpt-4-turbo or gpt-3.5-turbo
+            model="gpt-4-turbo",  # or 'gpt-3.5-turbo'
             messages=messages,
             temperature=0.8
         )
