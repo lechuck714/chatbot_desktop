@@ -7,4 +7,11 @@
     <orderEntry type="jdk" jdkName="Python 3.12 virtualenv at C:\Users\USER\Desktop\python projects\chatbot_desktop\chatbot_desktop\.venv" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
+  <component name="PyNamespacePackagesService">
+    <option name="namespacePackageFolders">
+      <list>
+        <option value="$MODULE_DIR$/config" />
+      </list>
+    </option>
+  </component>
 </module>

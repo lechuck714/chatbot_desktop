@@ -1,10 +1,5 @@
-# chatbot_desktop/config/config.py
-
+# config.py
 import os
+from openai import OpenAI
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-
-# Fallback (for development/testing only; remove or keep private)
-if not OPENAI_API_KEY:
-    # Replace with your actual key or keep it out of version control.
-    OPENAI_API_KEY = "your-fallback-key-here"
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
