@@ -117,7 +117,7 @@ def main(page: ft.Page):
     # ----------------------------------------
     def bubble_color(is_user=False):
         # Subtler background colors for chat bubbles
-        return "#90CAF9" if is_user else "#C8E6C9"
+        return "#1565C0" if is_user else "#2E7D32"
 
     def avatar(is_user=False):
         return ft.CircleAvatar(
@@ -129,10 +129,10 @@ def main(page: ft.Page):
 
     def make_chat_bubble(text, is_user=False):
         time_str = datetime.datetime.now().strftime("%H:%M")
-        # Color the text slightly darker in Light mode for contrast:
-        text_color = "#202020" if page.theme_mode == ft.ThemeMode.LIGHT else ft.Colors.WHITE
+        # Text color always white for better visibility
+        text_color = ft.Colors.WHITE
         main_text = ft.Text(text, selectable=True, color=text_color)
-        time_text = ft.Text(time_str, size=10, color="#666666", italic=True)
+        time_text = ft.Text(time_str, size=10, color="#CCCCCC", italic=True)
 
         bubble = ft.Container(
             content=ft.Column([main_text, time_text], tight=True),
